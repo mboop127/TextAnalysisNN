@@ -13,6 +13,7 @@ LayerThree = []
 LayerFour = []
 Analysis = []
 WordListInts = []
+OutputOrder = []
 
 LayerFourNeuron2 = []
 
@@ -48,6 +49,13 @@ def normalize(list):
     for i in range(len(list)):
         list[i] = int(list[i])
 
+if os.path.isfile("GenCount.txt"):
+    f = open("GenCount.txt")
+    Gen = f.read()
+    f.close()
+    Gen = int(Gen)
+    GenInc = Gen
+
 while 0 == 0:
     LayerOne = []
     LayerTwo = []
@@ -59,6 +67,14 @@ while 0 == 0:
     K = 0
 
     #generate or read
+
+    if os.path.isfile("OutputOrder.txt"):
+        f = open("OutputOrder.txt")
+        OutputOrder = f.read().split(',')
+        f.close()
+        OutputOrder = OutputOrder[:-1]
+    else:
+        OutputOrder = [x for x in range(OutputLength)]
 
     if os.path.isfile("WordList.txt"):
         f = open("WordList.txt")
@@ -141,6 +157,9 @@ while 0 == 0:
     mutate(LayerFourNeuron2)
     mutate(LayerFourNeuron1)
 
+    if random.random() < chance:
+        random.shuffle(OutputOrder)
+
     #read and analyze function
     text_file = open("1.txt", "r")
     LayerOne = text_file.read().split(',')
@@ -152,6 +171,7 @@ while 0 == 0:
     normalize(LayerFourNeuron1)
     normalize(LayerFourNeuron2)
     normalize(LayerThreeNeuron1)
+    normalize(OutputOrder)
 
 
     while A < 100:
@@ -260,7 +280,7 @@ while 0 == 0:
     f = open("Analysis.txt" , "w+")
     for i in range(len(Analysis)):
         Analysis[i] = int(Analysis[i])
-        f.write(str(Analysis[i]) + ',')
+        f.write(str(Analysis[OutputOrder[i]]) + ',')
     f.close()
 
 
@@ -323,6 +343,11 @@ while 0 == 0:
         f = open("WordListInts.txt", "w+")
         for i in range(len(WordListInts)):
             f.write(str(WordListInts[i]) + ',')
+        f.close()
+
+        f = open("OutputOrder.txt", "w+")
+        for i in range(len(OutputOrder)):
+            f.write(str(OutputOrder[i]) + ',')
         f.close()
 
         f = open("Variables.txt" , "w+")
