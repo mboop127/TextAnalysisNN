@@ -102,9 +102,16 @@ while 0 == 0:
         f.close()
         LayerThreeNeuron2 = LayerThreeNeuron2[:-1]
 
+    if os.path.isfile("LayerThreeNeuron3.txt"):
+        f = open("LayerThreeNeuron3.txt")
+        LayerThreeNeuron3 = f.read().split(',')
+        f.close()
+        LayerThreeNeuron3 = LayerThreeNeuron3[:-1]
+
     else:
         LayerThreeNeuron1 = [random.randint(1000,100000) for x in range(C)]
         LayerThreeNeuron2 = [random.randint(1,1000) for x in range(C)]
+        LayerThreeNeuron3 = [random.randint(1,1000) for x in range(C)]
 
         f = open("LayerThreeNeuron1.txt", "w+")
         for i in range(len(LayerThreeNeuron1)):
@@ -154,7 +161,8 @@ while 0 == 0:
 
     mutate(WordListInts)
     mutate(LayerThreeNeuron1)
-    mutate(LayerFourNeuron2)
+    mutate(LayerThreeNeuron2)
+    mutate(LayerThreeNeuron3)
     mutate(LayerFourNeuron1)
 
     if random.random() < chance:
@@ -171,6 +179,8 @@ while 0 == 0:
     normalize(LayerFourNeuron1)
     normalize(LayerFourNeuron2)
     normalize(LayerThreeNeuron1)
+    normalize(LayerThreeNeuron2)
+    normalize(LayerThreeNeuron3)
     normalize(OutputOrder)
 
 
@@ -241,7 +251,7 @@ while 0 == 0:
     normalize(LayerTwo)
 
     for i in range(len(LayerFourNeuron1)):
-        LayerThree.append(float(LayerThreeNeuron1[i])/(float(LayerTwo[i])*(float(LayerThreeNeuron2[i]))))
+        LayerThree.append(float(LayerThreeNeuron1[i])/(float(LayerTwo[i])*(float(LayerThreeNeuron2[i]))) + LayerThreeNeuron3[i])
 
     for i in range(B):
         while J < 100:
@@ -333,6 +343,11 @@ while 0 == 0:
         f = open("LayerThreeNeuron2.txt", "w+")
         for i in range(len(LayerThreeNeuron2)):
             f.write(str(LayerThreeNeuron2[i]) + ',')
+        f.close()
+
+        f = open("LayerThreeNeuron3.txt", "w+")
+        for i in range(len(LayerThreeNeuron3)):
+            f.write(str(LayerThreeNeuron3[i]) + ',')
         f.close()
 
         f = open("LayerFourNeuron1.txt", "w+")
