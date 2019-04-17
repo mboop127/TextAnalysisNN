@@ -81,6 +81,7 @@ while 0 == 0:
         WordList = f.read().split(',')
         f.close()
         WordList = WordList[:-1]
+        WordList = list( dict.fromkeys(WordList) )
 
     if os.path.isfile("WordListInts.txt"):
         f = open("WordListInts.txt")
@@ -188,7 +189,7 @@ while 0 == 0:
         while LayerOne[K] != 35 and LayerOne[K] != 27:
             K = random.randint(0,(len(LayerOne) - 100))
         for i in range(K, (K + 100)):
-            LayerTwo.append(LayerOne[i]*LayerOne[A]+(A/1000))
+            LayerTwo.append(LayerOne[i]*LayerOne[A])
         A = A+1
     A = 0
 
@@ -251,7 +252,7 @@ while 0 == 0:
     normalize(LayerTwo)
 
     for i in range(len(LayerFourNeuron1)):
-        LayerThree.append(float(LayerThreeNeuron1[i])/(float(LayerTwo[i])*(float(LayerThreeNeuron2[i]))) + LayerThreeNeuron3[i])
+        LayerThree.append(float(LayerThreeNeuron1[i])/(float(LayerTwo[i])*(float(LayerThreeNeuron2[i])+1)) + LayerThreeNeuron3[i])
 
     for i in range(B):
         while J < 100:
