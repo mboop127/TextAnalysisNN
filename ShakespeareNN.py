@@ -17,7 +17,7 @@ OutputOrder = []
 
 LayerFourNeuron2 = []
 
-OutputLength = 25
+OutputLength = 10
 
 fitness = None
 
@@ -32,6 +32,7 @@ H = 7
 J = 0
 K = 0
 L = 0
+M = 0
 chance = .01
 MagUpper = 1.025
 MagLower = .975
@@ -89,7 +90,11 @@ while 0 == 0:
         f.close()
         WordListInts = WordListInts[:-1]
     else:
-        WordListInts = [random.randint(0,(len(WordList)-1)) for x in range(len(WordList))]
+        M = 0
+        while M != len(WordList):
+            WordListInts.append(M)
+            M = M + 1
+        random.shuffle(WordListInts)
 
     if os.path.isfile("LayerThreeNeuron1.txt"):
         f = open("LayerThreeNeuron1.txt")
@@ -153,7 +158,7 @@ while 0 == 0:
         chance = float(f.readline())
         f.close()
     else:
-        H = random.randint(0,30)
+        H = random.randint(1,30)
 
     Vmutate(H)
     Vmutate(MagLower)
@@ -286,7 +291,7 @@ while 0 == 0:
 
     for i in range(len(Analysis)):
         while Analysis[i] > len(WordList):
-            Analysis[i] = (Analysis[i] / H)
+            Analysis[i] = (Analysis[i] % len(WordList))
 
     f = open("Analysis.txt" , "w+")
     for i in range(len(Analysis)):
@@ -310,7 +315,7 @@ while 0 == 0:
     L = len(WordList)
     for i in range(len(WordList)):
         if WordListInts[i] > len(WordList):
-            WordListInts[i]  = len(WordList) - 1
+            WordListInts[i]  = WordListInts[i]/2
         filedata = filedata.replace(str(L), WordList[WordListInts[i]])
         L = L - 1
     L = 0
